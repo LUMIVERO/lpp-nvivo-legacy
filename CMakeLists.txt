@@ -12,17 +12,18 @@ set(lucene++_VERSION
   "${lucene++_VERSION_MAJOR}.${lucene++_VERSION_MINOR}.${lucene++_VERSION_PATCH}"
 )
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Compatibility
 add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS=1)
+add_definitions(-D_GLIBCXX_USE_WCHAR_T=1)
+add_definitions(-DBoost_IOSTREAMS_NO_LIB)
 
+set(Boost_NO_SYSTEM_PATHS OFF)
+set(Boost_USE_STATIC_LIBS ON)
+set(ENABLE_BOOST_INTEGER OFF)
 set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "c++11")
-set(ENABLE_STATIC ON)
-set(LUCENE_USE_STATIC_BOOST_LIBS ON)
-
-set(ENABLE_DEMO OFF)
-set(ENABLE_TEST OFF)
 
 # include specific modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -80,7 +81,7 @@ option(ENABLE_STATIC
 ####################################
 
 find_package(Threads REQUIRED)
-find_package(Boost COMPONENTS
+find_package(Boost 1.61.0 COMPONENTS
   date_time
   filesystem
   iostreams
@@ -151,18 +152,6 @@ endif()
 
 if(CYGWIN)
   add_definitions(-D__LARGE64_FILES)
-endif()
-
-if(APPLE)
-  set(CMAKE_MACOSX_RPATH ON)
-  set(CMAKE_SKIP_BUILD_RPATH FALSE)
-  set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-  set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-  set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-  list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib" isSystemDir)
-  if("${isSystemDir}" STREQUAL "-1")
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-  endif()
 endif()
 
 #################################
