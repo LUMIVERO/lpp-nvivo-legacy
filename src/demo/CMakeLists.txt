@@ -7,11 +7,12 @@ file(GLOB_RECURSE
 )
 
 add_definitions(-DLPP_HAVE_DLL)
-find_package(Boost REQUIRED)
+find_package(Boost 1.61.0 COMPONENTS system REQUIRED)
 
 include_directories(
   ${Boost_INCLUDE_DIRS}
 )
+
 include_directories(
   "${lucene++_SOURCE_DIR}/include"
 )
@@ -21,7 +22,7 @@ add_executable(indexfiles
   ${demo_headers}
 )
 target_link_libraries(indexfiles
-  lucene++ boost_system
+  lucene++ ${Boost_SYSTEM_LIBRARIES}
 )
 
 add_executable(searchfiles
@@ -29,7 +30,7 @@ add_executable(searchfiles
   ${demo_headers}
 )
 target_link_libraries(searchfiles
-  lucene++ boost_system
+  lucene++ ${Boost_SYSTEM_LIBRARIES}
 )
 
 add_executable(deletefiles
@@ -37,5 +38,5 @@ add_executable(deletefiles
   ${demo_headers}
 )
 target_link_libraries(deletefiles
-  lucene++ boost_system
+  lucene++ ${Boost_SYSTEM_LIBRARIES}
 )
