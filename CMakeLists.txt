@@ -12,7 +12,17 @@ set(lucene++_VERSION
   "${lucene++_VERSION_MAJOR}.${lucene++_VERSION_MINOR}.${lucene++_VERSION_PATCH}"
 )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+# Compatibility
+add_definitions(-DBOOST_BIND_GLOBAL_PLACEHOLDERS=1)
+
+set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "c++11")
+set(ENABLE_STATIC ON)
+set(LUCENE_USE_STATIC_BOOST_LIBS ON)
+
+set(ENABLE_DEMO OFF)
+set(ENABLE_TEST OFF)
 
 # include specific modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
