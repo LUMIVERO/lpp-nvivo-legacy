@@ -1332,7 +1332,7 @@ public:
 		{
 			out->writeByte(static_cast<uint8_t>(1));
 			out->writeVInt(emptyOutputBytes.size());
-			out->writeBytes(emptyOutputBytes, 0, emptyOutputBytes.size());
+			out->writeBytes(emptyOutputBytes.data(), 0, emptyOutputBytes.size());
 		}
 		else
 		{
@@ -1366,7 +1366,7 @@ public:
 		out->writeVInt(arcCount);
 		out->writeVInt(arcWithOutputCount);
 		out->writeVInt(bytes.size());
-		out->writeBytes(bytes, 0, bytes.size());
+		out->writeBytes(bytes.data(), 0, bytes.size());
 	}
 
 	/// <summary>
@@ -2443,7 +2443,7 @@ public:
 
 		auto const r = getBytesReader(0);
 
-		constexpr int topN = std::min(maxDerefNodes, inCounts.size());
+		constexpr int topN = std::min((int)maxDerefNodes, (int)inCounts.size());
 
 		// Find top nodes with highest number of incoming arcs:
 		boost::shared_ptr<NodeQueue> q = boost::make_shared<NodeQueue>(topN);
